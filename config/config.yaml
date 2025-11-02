@@ -1,0 +1,25 @@
+root_dir: artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  dataset_name: "abisee/cnn_dailymail"
+  dataset_path: artifacts/data_ingestion/cnn_dailymail
+  dataset_version: '1.0.0'
+  dataset_split: "validation"
+
+data_transformation:
+  root_dir: artifacts/data_transformation
+  dataset_path: artifacts/data_ingestion/cnn_dailymail
+  tokenized_data_path: artifacts/data_transformation/tokenized_data
+  tokenizer: artifacts/data_transformation/tokenizer
+
+model_trainer:
+  root_dir: artifacts/model_trainer
+  model_path: artifacts/model_trainer/model
+  tokenized_data_path: artifacts/data_transformation/tokenized_data
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  model_path: artifacts/model_trainer/model
+  dataset_path: artifacts/data_ingestion/cnn_dailymail
+  tokenizer: artifacts/data_transformation/tokenizer
