@@ -15,6 +15,10 @@ class DataTransformationConfig:
     dataset_path: Path
     tokenized_data_path: Path
     tokenizer: Path
+    checkpoint: str
+    max_input_length: int
+    max_target_length: int
+    stride: int
 
 @dataclass
 class ModelTrainerConfig:

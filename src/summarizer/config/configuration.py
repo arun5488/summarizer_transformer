@@ -1,5 +1,5 @@
 from src.summarizer import logger
-from src.summarizer.entity import DataIngestionConfig
+from src.summarizer.entity import DataIngestionConfig, DataTransformationConfig, ModelevaluationConfig, ModelTrainerConfig
 from src.summarizer.utils.common import read_yaml, create_directories
 from src.summarizer import constants as const
 
@@ -34,3 +34,24 @@ class ConfigurationManager:
         except Exception as e:
             logger.error(f"Error occured inside get_data_ingestion_config: {e}")
             raise e
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        try:
+            logger.info("Inside get_data_transformation_config")
+            config = self.config.data_transformation
+            logger.info("Creating folder for data transformation")
+            create_directories([config.root_dir])
+            return DataTransformationConfig(
+                root_dir=config.root_dir,
+                dataset_path = config.dataset_path,
+                tokenized_data_path = config.tokenized_data_path,
+                tokenizer = config.tokenizer,
+                checkpoint = self.params.checkpoint,
+                max_target_length = self.params.max_target_length,
+                max_input_length = self.params.max_input_length,
+                stride = self.params.stride
+            )
+        except Exception as e:
+            logger.error(f"Error occured inside get_data_transformation_config: {e}")
+            raise e
+
+        

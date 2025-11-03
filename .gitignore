@@ -3,3 +3,4 @@
 *.log
 *.ipynb
 template.py
+/artifacts

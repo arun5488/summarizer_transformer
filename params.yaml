@@ -1,1 +1,4 @@
 checkpoint: "google/pegasus-cnn_dailymail"
+max_input_length: 512
+max_target_length: 128
+stride: 64
