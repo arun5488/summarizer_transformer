@@ -10,7 +10,7 @@ class TrainingPipeline:
         try:
             logger.info("Inside initiate_training_pipeline")
             logger.info("Data Ingestion stage started")
-            DataIngestionPipeline().initiate_data_ingestion_pipeline()
+            # DataIngestionPipeline().initiate_data_ingestion_pipeline()
             logger.info("Data Ingestion stage completed")
             logger.info("Data Transformation stage started")
             DataTransformationPipeline().initiate_data_transformation_pipeline()
