@@ -70,8 +70,8 @@ class ModelEvaluation:
             for i in range(0, len(tokenized_eval_dataset['input_ids']), batch_size):
                 logger.info(f"total records:{len(tokenized_eval_dataset['input_ids'])}, record under process:{i}")
                 batch = {
-                "input_ids": torch.tensor(tokenized_eval_dataset["input_ids"][i:i+batch_size]),
-                "attention_mask": torch.tensor(tokenized_eval_dataset["attention_mask"][i:i+batch_size])
+                "input_ids": torch.tensor(tokenized_eval_dataset["input_ids"][i:i+batch_size]).to(self.device),
+                "attention_mask": torch.tensor(tokenized_eval_dataset["attention_mask"][i:i+batch_size]).to(self.device)
                 }
                 outputs = model.generate(
                     input_ids = batch["input_ids"],
