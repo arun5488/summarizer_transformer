@@ -35,23 +35,24 @@ class TrainingPipeline:
 
     def initiate_training_pipeline(self):
         try:
-            logger.info("Inside initiate_training_pipeline")
-            logger.info("Data Ingestion stage started")
-            DataIngestionPipeline().initiate_data_ingestion_pipeline()
-            logger.info("Data Ingestion stage completed")
-            logger.info("Data Transformation stage started")
-            DataTransformationPipeline().initiate_data_transformation_pipeline()
-            logger.info("Data Transformation stage completed")
-            logger.info("Initiating ModelTrainerPipeline stage")
-            ModelTrainerPipeline().initiate_model_training_pipeline()
-            logger.info("Model Trainer pipeline stage completed")
             if(const.RUN_FROM_LOCAL == True):
                 logger.info("syncing local folder to s3")
-                self.sync_artifacts_to_s3()
+                self.sync_s3_to_artifacts()
                 logger.info("s3 and artifacts are in sync now")
             else:
+
+                logger.info("Inside initiate_training_pipeline")
+                logger.info("Data Ingestion stage started")
+                DataIngestionPipeline().initiate_data_ingestion_pipeline()
+                logger.info("Data Ingestion stage completed")
+                logger.info("Data Transformation stage started")
+                DataTransformationPipeline().initiate_data_transformation_pipeline()
+                logger.info("Data Transformation stage completed")
+                logger.info("Initiating ModelTrainerPipeline stage")
+                ModelTrainerPipeline().initiate_model_training_pipeline()
+                logger.info("Model Trainer pipeline stage completed")
                 logger.info("syncing s3 to local folder")
-                self.sync_s3_to_artifacts()
+                self.sync_artifacts_to_s3()                
                 logger.info("artifacs and s3 are in sync")
         
 

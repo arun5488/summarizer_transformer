@@ -9,7 +9,7 @@ SCHEMA_YAML = "schema.yaml"
 #aws
 AWS_BUCKET = "bsaarun54.summarizer"
 
-RUN_FROM_LOCAL = True
+RUN_FROM_LOCAL = False
 
 #model trainer
 # training args 
