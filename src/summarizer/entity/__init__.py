@@ -36,3 +36,4 @@ class ModelevaluationConfig:
     max_input_length: int
     max_target_length: int
     dataset_path: Path
+    tokenized_eval_data_path: Path

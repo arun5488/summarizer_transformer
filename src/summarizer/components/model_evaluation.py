@@ -1,10 +1,11 @@
 from src.summarizer import logger
 from datasets import load_from_disk
-from transformers import Seq2SeqTrainer, AutoModelForSeq2SeqLM, PegasusTokenizer
+from transformers import AutoModelForSeq2SeqLM, PegasusTokenizer, DataCollatorForSeq2Seq
 from src.summarizer import constants as const
 from src.summarizer.entity import ModelevaluationConfig
 import evaluate
 import torch
+from pathlib import Path
 
 class ModelEvaluation:
     def __init__(self, config: ModelevaluationConfig):
@@ -17,6 +18,9 @@ class ModelEvaluation:
         logger.info("loading dataset from local folder")
         self.datasets = load_from_disk(self.config.dataset_path)
         self.rouge_score = evaluate.load("rouge")
+        logger.info("checking the device")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        logger.info(f"device:{self.device}")
 
     def split_data_set(self, datasets):
         try:
@@ -38,6 +42,7 @@ class ModelEvaluation:
             examples["article"],
             max_length=self.config.max_input_length,
             truncation=True,
+            padding = "max_length"
             )
             model_inputs["reference"] = examples["highlights"]
             logger.info(f"datatype of model_inputs:{type(model_inputs)}")
@@ -53,12 +58,17 @@ class ModelEvaluation:
             logger.info("load the eval dataset")
             dataset = eval_dataset
             logger.info("loading model in eval mode")
-            model = self.model.eval()
+            model = self.model.to(self.device).eval()
             predictions = []
-            tokenized_eval_dataset = dataset.map(self.preprocess_function, batched = True, remove_columns=dataset.column_names)
+            if Path(self.config.tokenized_eval_data_path).exists():
+                tokenized_eval_dataset = load_from_disk(self.config.tokenized_eval_data_path)
+            else:           
+                tokenized_eval_dataset = dataset.map(self.preprocess_function, batched = True, remove_columns=dataset.column_names)
+            
             batch_size = const.BATCH_SIZE
             logger.info("performing batch predictions on eval dataset")
             for i in range(0, len(tokenized_eval_dataset['input_ids']), batch_size):
+                logger.info(f"total records:{len(tokenized_eval_dataset['input_ids'])}, record under process:{i}")
                 batch = {
                 "input_ids": torch.tensor(tokenized_eval_dataset["input_ids"][i:i+batch_size]),
                 "attention_mask": torch.tensor(tokenized_eval_dataset["attention_mask"][i:i+batch_size])

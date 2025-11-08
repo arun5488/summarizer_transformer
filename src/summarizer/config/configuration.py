@@ -84,7 +84,8 @@ class ConfigurationManager:
                 dataset_path = config.dataset_path,
                 tokenizer = config.tokenizer,
                 max_input_length = self.params.max_target_length,
-                max_target_length = self.params.max_target_length
+                max_target_length = self.params.max_target_length,
+                tokenized_eval_data_path = self.config.tokenized_eval_data_path
             )
         except Exception as e:
             logger.error(f"Error occured inside get_model_evaluation_config method:{e}")

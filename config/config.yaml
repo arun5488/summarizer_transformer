@@ -25,3 +25,4 @@ model_evaluation:
   model_path: artifacts/model_trainer/model
   dataset_path: artifacts/data_ingestion/cnn_dailymail
   tokenizer: artifacts/data_transformation/tokenizer
+  tokenized_eval_data_path: artifacts/model_evaluation/tokenized_eval_data_path
