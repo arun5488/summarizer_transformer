@@ -33,3 +33,6 @@ class ModelevaluationConfig:
     root_dir: Path
     model_path: Path
     tokenizer: Path
+    max_input_length: int
+    max_target_length: int
+    dataset_path: Path

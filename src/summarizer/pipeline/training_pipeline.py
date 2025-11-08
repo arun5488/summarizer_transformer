@@ -5,6 +5,7 @@ from src.summarizer.pipeline.model_trainer_pipeline import ModelTrainerPipeline
 from src.summarizer.cloud.s3syncer import S3Sync
 from src.summarizer import constants as const
 from src.summarizer.utils.common import read_yaml
+from src.summarizer.pipeline.model_evaluation_pipeline import ModelEvaluationPipeline
 
 class TrainingPipeline:
     def __init__(self):
@@ -36,8 +37,10 @@ class TrainingPipeline:
     def initiate_training_pipeline(self):
         try:
             if(const.RUN_FROM_LOCAL == True):
+                logger.info("Initiate model evaluation stage")
+                ModelEvaluationPipeline().initiate_model_evaluation_pipeline()
                 logger.info("syncing local folder to s3")
-                self.sync_s3_to_artifacts()
+                # self.sync_s3_to_artifacts()
                 logger.info("s3 and artifacts are in sync now")
             else:
 
