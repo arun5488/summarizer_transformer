@@ -15,7 +15,7 @@ class ModelTrainer:
         self.tokenizer = PegasusTokenizer.from_pretrained(config.tokenizer)
         self.model_name = config.checkpoint.split("/")[-1]
         self.tokenized_dataset = load_from_disk(config.tokenized_data_path)
-        self.logging_steps = len(self.tokenized_dataset["input_ids"]) // const.BATCH_SIZE
+        self.logging_steps = len(self.tokenized_dataset["train"]["input_ids"]) // const.BATCH_SIZE
         self.rouge_score = evaluate.load("rouge")
         self.args = Seq2SeqTrainingArguments(
             output_dir = f"{self.model_name}",
