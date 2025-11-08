@@ -6,12 +6,19 @@ from src.summarizer import constants as const
 import numpy as np
 from nltk import sent_tokenize
 import evaluate
+from pathlib import Path
 
 class ModelTrainer:
     def __init__(self, config: ModelTrainerConfig):
         logger.info("initialized ModelTrainer")
         self.config = config
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(config.checkpoint)
+        if Path(config.model_path).exists():
+            logger.info("model exists in local folder, so loading from local")
+            self.model = AutoModelForSeq2SeqLM.from_pretrained(config.model_path)
+        else:
+            logger.info("model doesnt exist in local, downloading and saving the model immediately")
+            self.model = AutoModelForSeq2SeqLM.from_pretrained(config.checkpoint)
+            self.model.save_pretrained(config.model_path)
         self.tokenizer = PegasusTokenizer.from_pretrained(config.tokenizer)
         self.model_name = config.checkpoint.split("/")[-1]
         self.tokenized_dataset = load_from_disk(config.tokenized_data_path)
@@ -75,7 +82,9 @@ class ModelTrainer:
             logger.info("inside initiate_model_training")
             self.trainer.train()
             logger.info("saving the trainer model in local")
-            self.trainer.save_model(self.config.model_path)
+            self.trainer.model.save_pretrained(self.config.model_path)
+            logger.info("saving tokenizer in local after training")
+            self.tokenizer.save_pretrained(self.config.tokenizer)
         except Exception as e:
             logger.error(f"Error occured inside initiate_model_training:{e}")
             raise e
