@@ -25,10 +25,11 @@ class ModelTrainerConfig:
     root_dir: Path
     model_path: Path
     tokenized_data_path: Path
+    tokenizer : Path
+    checkpoint: str
 
 @dataclass
 class ModelevaluationConfig:
     root_dir: Path
     model_path: Path
-    dataset_path: Path
     tokenizer: Path

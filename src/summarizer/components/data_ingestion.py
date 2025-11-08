@@ -21,8 +21,6 @@ class DataIngestion:
             logger.info(f"dataset loaded successfully. length: {len(dataset)}")
             logger.info(f"dataset type: {type(dataset)}")
             logger.info("splitting the dataset into train and test")
-            dataset = dataset.train_test_split(train_size=const.TRAIN_TEST_SPLIT)
-            logger.info(f"dataset splitted successfully. length: {len(dataset["train"])}")
             return dataset
         except Exception as e:
             logger.error(f"error occured inside load_dataset method: {e}")

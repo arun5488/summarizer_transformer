@@ -5,3 +5,21 @@ TRAIN_TEST_SPLIT = 0.8
 CONFIG_YAML = "config/config.yaml"
 PARAMS_YAML = "params.yaml"
 SCHEMA_YAML = "schema.yaml"
+
+#aws
+AWS_BUCKET = "bsaarun54.summarizer"
+
+RUN_FROM_LOCAL = True
+
+#model trainer
+# training args 
+BATCH_SIZE = 5
+NUM_TRAIN_EPOCHS = 1
+LEARNING_RATE = 5.6e-5
+WEIGHT_DECAY = 0.01
+SAVE_TOTAL_LIMIT = 3
+PREDICT_WITH_GENERATE = True
+PUSH_TO_HUB = False
+REPORT_TO = "none"
+FP16 = True
+GRADIENT_ACCUMULATION_STEPS = 8

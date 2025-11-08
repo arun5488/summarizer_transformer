@@ -53,5 +53,37 @@ class ConfigurationManager:
         except Exception as e:
             logger.error(f"Error occured inside get_data_transformation_config: {e}")
             raise e
-
-        
+    
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        try:
+            logger.info("inside get_model_trainer_config")
+            config = self.config.model_trainer
+            logger.info("creating model_trainer directory")
+            create_directories([config.root_dir])
+            logger.info("returning the model_trainer config")
+            return ModelTrainerConfig(
+                root_dir=config.root_dir,
+                model_path = config.model_path,
+                tokenized_data_path = config.tokenized_data_path,
+                tokenizer = config.tokenizer,
+                checkpoint = self.params.checkpoint
+            )
+        except Exception as e:
+            logger.error(f"Error occured inside get_model_trainer_config:{e}")
+            raise e
+    
+    def get_model_evaluation_config(self) -> ModelevaluationConfig:
+        try:
+            logger.info("inside get_model_evaluation_config method")
+            config = self.config.model_evaluation
+            logger.info("creating model_evaluation root directory")
+            create_directories([config.root_dir])
+            return ModelevaluationConfig(
+                root_dir= config.root_dir,
+                model_path = config.model_path,
+                dataset_path = config.dataset_path,
+                tokenizer = config.tokenizer
+            )
+        except Exception as e:
+            logger.error(f"Error occured inside get_model_evaluation_config method:{e}")
+            raise e
