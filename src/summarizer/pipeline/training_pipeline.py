@@ -37,8 +37,6 @@ class TrainingPipeline:
     def initiate_training_pipeline(self):
         try:
             if(const.RUN_FROM_LOCAL == True):
-                logger.info("Initiate model evaluation stage")
-                ModelEvaluationPipeline().initiate_model_evaluation_pipeline()
                 logger.info("syncing local folder to s3")
                 # self.sync_s3_to_artifacts()
                 logger.info("s3 and artifacts are in sync now")
@@ -54,7 +52,9 @@ class TrainingPipeline:
                 logger.info("Initiating ModelTrainerPipeline stage")
                 ModelTrainerPipeline().initiate_model_training_pipeline()
                 logger.info("Model Trainer pipeline stage completed")
-                logger.info("syncing s3 to local folder")
+                logger.info("Initiate model evaluation stage")
+                ModelEvaluationPipeline().initiate_model_evaluation_pipeline()
+                logger.info("syncing s3 to local folder")                
                 self.sync_artifacts_to_s3()                
                 logger.info("artifacs and s3 are in sync")
         

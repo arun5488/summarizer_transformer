@@ -37,3 +37,8 @@ class ModelevaluationConfig:
     max_target_length: int
     dataset_path: Path
     tokenized_eval_data_path: Path
+
+@dataclass
+class TextSummmarizerConfig:
+    model_path: Path
+    tokenizer: Path

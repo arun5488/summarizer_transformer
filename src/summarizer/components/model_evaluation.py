@@ -103,6 +103,7 @@ class ModelEvaluation:
     def initiate_model_evaluation(self):
         try:
             logger.info("inside initiate_model_evaluation")
+            logger.info("selecting only 100 records of the eval dataset due to resource issues")
             eval_dataset = self.split_data_set(self.datasets).select(range(100))
             predictions = self.generate_predictions(eval_dataset)
             references = eval_dataset['highlights']

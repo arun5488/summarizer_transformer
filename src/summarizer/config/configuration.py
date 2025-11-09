@@ -1,5 +1,5 @@
 from src.summarizer import logger
-from src.summarizer.entity import DataIngestionConfig, DataTransformationConfig, ModelevaluationConfig, ModelTrainerConfig
+from src.summarizer.entity import DataIngestionConfig, DataTransformationConfig, ModelevaluationConfig, ModelTrainerConfig, TextSummmarizerConfig
 from src.summarizer.utils.common import read_yaml, create_directories
 from src.summarizer import constants as const
 
@@ -89,4 +89,15 @@ class ConfigurationManager:
             )
         except Exception as e:
             logger.error(f"Error occured inside get_model_evaluation_config method:{e}")
+            raise e
+    def get_text_summarizer_config(self) -> TextSummmarizerConfig:
+        try:
+            logger.info("inside get_text_summarizer_config")
+            config = self.config.text_summarizer
+            return TextSummmarizerConfig(
+                model_path = config.model_path,
+                tokenizer= config.tokenizer
+            )
+        except Exception as e:
+            logger.error(f"error occured inside get_text_summarizer_config:{e}")
             raise e
