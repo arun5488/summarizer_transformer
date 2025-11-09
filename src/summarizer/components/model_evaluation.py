@@ -56,7 +56,7 @@ class ModelEvaluation:
         try:
             logger.info("inside generate_predictions method in model evaluation")
             logger.info("load the eval dataset")
-            dataset = eval_dataset.select(range(100))
+            dataset = eval_dataset
             logger.info("loading model in eval mode")
             model = self.model.to(self.device).eval()
             predictions = []
@@ -103,7 +103,7 @@ class ModelEvaluation:
     def initiate_model_evaluation(self):
         try:
             logger.info("inside initiate_model_evaluation")
-            eval_dataset = self.split_data_set(self.datasets)
+            eval_dataset = self.split_data_set(self.datasets).select(range(100))
             predictions = self.generate_predictions(eval_dataset)
             references = eval_dataset['highlights']
             result = self.evaluate_predictions(predictions = predictions, references = references)
