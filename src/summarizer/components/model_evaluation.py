@@ -56,7 +56,7 @@ class ModelEvaluation:
         try:
             logger.info("inside generate_predictions method in model evaluation")
             logger.info("load the eval dataset")
-            dataset = eval_dataset
+            dataset = eval_dataset.select(range(100))
             logger.info("loading model in eval mode")
             model = self.model.to(self.device).eval()
             predictions = []
@@ -93,7 +93,8 @@ class ModelEvaluation:
         try:
             logger.info("inside evaluate_predictions method")
             results = self.rouge_score.compute(predictions=predictions, references=references, use_stemmer = True)
-            return {k: v.mid.fmeasure * 100 for k,v in results.items()}
+            logger.info(f"ROUGE results: {results}")
+            return {k: v["fmeasure"] * 100 for k,v in results.items()}
 
         except Exception as e:
             logger.error(f"Error occured inside evaluate_predictions method:{e}")
