@@ -94,7 +94,7 @@ class ModelEvaluation:
             logger.info("inside evaluate_predictions method")
             results = self.rouge_score.compute(predictions=predictions, references=references, use_stemmer = True)
             logger.info(f"ROUGE results: {results}")
-            return {k: v["fmeasure"] * 100 for k,v in results.items()}
+            return {k: round(float(v)* 100, 2)  for k,v in results.items()}
 
         except Exception as e:
             logger.error(f"Error occured inside evaluate_predictions method:{e}")
