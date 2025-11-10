@@ -10,7 +10,8 @@ class TextSummarizationPipeline:
     def initiate_text_summarization_pipeline(self, input_text):
         try:
             logger.info("Inside initiate_text_summarization_pipeline method")
-            TextSummarizer(self.config).initiate_text_summarization(input_text=input_text)
+            final_summary = TextSummarizer(self.config).initiate_text_summarization(input_text=input_text)
+            return final_summary
 
         except Exception as e:
             logger.error(f"Error occured inside initiate_text_summarization_pipeline method:{e}")

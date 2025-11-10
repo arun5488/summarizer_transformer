@@ -15,3 +15,5 @@ python-box==6.0.2
 tiktoken>=0.5.1
 protobuf
 sentencepiece
+Flask
+dotenv

@@ -44,6 +44,7 @@ class TextSummarizer:
                 decode_chunk = self.tokenizer.decode(summary[0],skip_special_tokens = True)
                 logger.info(f"decoded chunk: {decode_chunk}")
                 decoded_summary.append(decode_chunk)
+                count = count + 1
             return decoded_summary
 
         except Exception as e:
@@ -67,6 +68,7 @@ class TextSummarizer:
             decoded_summary = self.summarize_text(input_text)
             final_summary = self.remove_duplicate_sentences_from_summary(decoded_summary)
             logger.info(f"Final summary:{final_summary}")
+            return final_summary
         except Exception as e:
             logger.error(f"Error occured inside initiate_text_summarization method:{e}")
             raise e
